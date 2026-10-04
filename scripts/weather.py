@@ -19,6 +19,8 @@ def parse_args() -> argparse.Namespace:
                         help='log file (no logging if empty)')
     parser.add_argument('--strip-variation-selector', action='store_true',
                         help='strip U+FE0F from the weather icon (for tmux < 3.5)')
+    parser.add_argument('--force-fetch', action='store_true',
+                        help='force a fetch for testing/etc')
     return parser.parse_args()
 
 
@@ -80,7 +82,10 @@ def fetch_weather(args: argparse.Namespace) -> None:
     # only import fetch (and urllib/json) when we need it
     from fetch import location, weather
 
-    log.info('[.] latest weather is empty or stale, fetching')
+    if args.force_fetch:
+        log.info('[.] --force-fetch set, fetching')
+    else:
+        log.info('[.] latest weather is empty or stale, fetching')
 
     loc = location()
     if loc is None:
@@ -100,7 +105,7 @@ def main():
     args = parse_args()
     setup_logging(args.logfile)
 
-    if is_stale(args.cache, args.refresh_interval):
+    if args.force_fetch or is_stale(args.cache, args.refresh_interval):
         fetch_weather(args)
 
     parts = read_latest(args.cache).split(' ', 2)

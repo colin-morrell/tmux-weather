@@ -36,6 +36,7 @@ then press `prefix` + `I` to install.
 | `@tmux-weather-cache` | `~/.cache/tmux-weather/latest` | cached `<timestamp> <weather>` line |
 | `@tmux-weather-logfile` | (none) | log file. no logging if unset |
 | `@tmux-weather-strip-variation-selector` | `off` | `on` strips U+FE0F from the weather icon (see [known issues](#known-issues)) |
+| `@tmux-weather-refresh-key` | `W` | `prefix` + this key forces a fetch |
 
 e.g.
 
@@ -59,6 +60,18 @@ fetch runs are network-bound and likely to be variable.
 
 no-fetch runs are kept light by skipping the `fetch.py` import.
 
+## manual refresh
+
+in tmux: press `prefix` + `W` (`@tmux-weather-refresh-key`) to force a fetch
+
+outside tmux, use the `--force-fetch` flag:
+
+```sh
+python3 ~/.tmux/plugins/tmux-weather/scripts/weather.py --force-fetch --cache '[your cache path]'
+```
+
+pass the same `--cache` (and `--logfile`/`--strip-variation-selector`) as your tmux options.
+
 ## development
 
 plugin has no dependencies. 
@@ -79,3 +92,7 @@ tmux source-file ~/.tmux.conf
   cell after the emoji. Set `@tmux-weather-strip-variation-selector on` to strip U+FE0F, or
   upgrade to tmux >= 3.5 (`variation-selector-always-wide`, on by default).
 - location is derived from host's public IP, so a VPN will report the VPN's location.
+
+## license
+
+MIT, see [LICENSE](LICENSE).
