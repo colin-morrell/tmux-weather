@@ -12,10 +12,10 @@ def http_get(url: str) -> str:
         return res.read().decode()
 
 
-def get_location() -> dict | None:
+def location() -> dict | None:
     """Get machine's location via IP."""
 
-    # TODO --> VPN will almost certainly break this
+    # TODO --> VPN support
 
     url = 'https://ipinfo.io'
     try:
@@ -28,7 +28,7 @@ def get_location() -> dict | None:
     return loc
 
 
-def get_weather(loc: dict, strip_variation_selector: bool = False) -> str | None:
+def weather(loc: dict, strip_variation_selector: bool = False) -> str | None:
     coordinates = loc['loc']
     url = 'https://wttr.in/{}?format=3'.format(coordinates)
     try:
@@ -50,6 +50,6 @@ def get_weather(loc: dict, strip_variation_selector: bool = False) -> str | None
     # as 1 cell wide but winterminal draws it as 2, leaving an unstyled
     # (i.e. black) cell after it
     if strip_variation_selector:
-        icon = icon.replace('️', '')
+        icon = icon.replace('\ufe0f', '')
 
     return '{} {}  {}'.format(city, icon, temp)
