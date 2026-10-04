@@ -9,8 +9,8 @@ tmux plugin that shows the current weather in the status bar with minimal overhe
 
 ## requirements
 
-- python3.10+
-- tmux v??
+- `python3.10+`
+- `tmux v??`
 
 ## install
 
@@ -57,7 +57,7 @@ average runtime (win10/WSL, system `python3` 3.12):
 
 fetch runs are network-bound and likely to be variable.
 
-no-fetch runs are kept light by skipping the `fetch.py` importd.
+no-fetch runs are kept light by skipping the `fetch.py` import.
 
 ## development
 
